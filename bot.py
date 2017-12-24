@@ -34,4 +34,4 @@ async def on_message(message):
     if "<@!162716870506577920>" in message.content :# or "matej" in message.content.lower():
         await client.send_message(message.channel, ("Light theme sucks.", "Never take a shot of really hot sauce.")[random.randint(0,1)])
 
-client.run(BOT_TOKEN)
+client.run(process.env.BOT_TOKEN)
