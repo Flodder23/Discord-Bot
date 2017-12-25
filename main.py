@@ -20,19 +20,18 @@ async def ping():
 async def christmas():
     """Tells you how long until Christmas.
     As requested by Adam."""
-    print("Got here.")
     today = datetime.datetime.today()
     if today.month == 12 and today.day == 25:
-        until = message.author.mention + " CHRISTMAS IS TODAY YAY"
+        until = "CHRISTMAS IS TODAY YAY"
     else:
         nextXMasYear = today.year
         if today.month == 12 and today.day >= 25:
             nextXMasYear += 1
-        until = message.author.mention + " Christmas is in "
+        until = "Christmas is in "
         rd = relativedelta(datetime.date(2017,12,25), datetime.datetime.today())
         for a in ("years","months","days","hours","minutes","seconds"):
             if rd.__dict__[a] != 0:
-                if until != message.author.mention + " Christmas is in ":
+                if until != "Christmas is in ":
                     until += ", "
                 until += str(rd.__dict__[a]) + " " + a
     await bot.say(until)
@@ -43,5 +42,5 @@ async def rps():
     (You are expected to claim your action after the \"rps\")"""
     await bot.say(("Rock", "Paper", "Scissors")[random.randint(0,2)])
 
-#bot.run(os.getenv('BOT_TOKEN'))
-bot.run("Mzk0NTAyOTM4MDk0OTkzNDEw.DSMINQ.Q7n94PNCwgzRrZoBuYhkWH4Dhsg") ### DELETE BOT TOKEN WHEN FINISHED EDITS ###
+bot.run(os.getenv('BOT_TOKEN'))
+#bot.run("") ### DELETE BOT TOKEN WHEN FINISHED EDITS ###
