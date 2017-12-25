@@ -23,10 +23,10 @@ async def on_message(message):
             await client.send_message(message.channel, ("<@%s>" % message.author.id + "   " + ("Rock", "Paper", "Scissors")[random.randint(0,2)]))
 
         if ">christmas" in message.content.lower():
+            today = datetime.datetime.today()
             if today.month == 12 and today.day == 25:
                 until = "<@%s> CHRISTMAS IS TODAY YAY" % message.author.id
             else:
-                today = datetime.datetime.today()
                 nextXMasYear = today.year
                 if today.month == 12 and today.day >= 25:
                     nextXMasYear += 1
