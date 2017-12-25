@@ -19,19 +19,24 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if message.author.id != "394502938094993410" :
-        if message.content.lower() in ("rock", "paper", "scissors"):
+        if message.content.lower() in (">rock", ">paper", ">scissors"):
             await client.send_message(message.channel, ("<@%s>" % message.author.id + "   " + ("Rock", "Paper", "Scissors")[random.randint(0,2)]))
 
-        if "christmas" in message.content.lower():
-            await client.send_message (message.channel, "<@%s>" % message.author.id + "  CHRISTMAS IS TODAY YAY")
-#            until = "<@%s> Christmas is in " % message.author.id
-#            rd = relativedelta(datetime.date(2017,12,25), datetime.datetime.today())
-#            for a in ("years","months","days","hours","minutes","seconds"):
-#                if rd.__dict__[a] != 0:
-#                    if until != "<@%s> Christmas is in " % message.author.id:
-#                        until += ", "
-#                    until += str(rd.__dict__[a]) + " " + a
-#            await client.send_message (message.channel, until)
+        if ">christmas" in message.content.lower():
+            if today.month == 12 and today.day == 25:
+                until = "<@%s> CHRISTMAS IS TODAY YAY" % message.author.id
+            else:
+                nextXMasYear = today.year
+                if today.month == 12 and today.day >= 25:
+                    nextXMasYear += 1
+                until = "<@%s> Christmas is in " % message.author.id
+                rd = relativedelta(datetime.date(2017,12,25), datetime.datetime.today())
+                for a in ("years","months","days","hours","minutes","seconds"):
+                    if rd.__dict__[a] != 0:
+                        if until != "<@%s> Christmas is in " % message.author.id:
+                            until += ", "
+                        until += str(rd.__dict__[a]) + " " + a
+            await client.send_message (message.channel, until)
 
     if "<@!162716870506577920>" in message.content :# or "matej" in message.content.lower():
         await client.send_message(message.channel, ("Light theme sucks.", "Never take a shot of really hot sauce.")[random.randint(0,1)])
