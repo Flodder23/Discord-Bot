@@ -7,11 +7,6 @@ import random
 import math
 from dateutil.relativedelta import relativedelta
 import datetime
-import os
-
-def index(request):
-    times = int(os.environ.get('TIMES',3))
-    return HttpResponse('Hello! ' * times)
 
 Client = discord.Client()
 client = commands.Bot(command_prefix = ">")
@@ -39,4 +34,4 @@ async def on_message(message):
     if "<@!162716870506577920>" in message.content :# or "matej" in message.content.lower():
         await client.send_message(message.channel, ("Light theme sucks.", "Never take a shot of really hot sauce.")[random.randint(0,1)])
 
-client.login(os.environ.get("BOT_TOKEN"))
+client.run(BOT_TOKEN)
