@@ -42,4 +42,12 @@ async def on_message(message):
     if "<@!162716870506577920>" in message.content :# or "matej" in message.content.lower():
         await client.send_message(message.channel, ("Light theme sucks.", "Never take a shot of really hot sauce.")[random.randint(0,1)])
 
+    if "@someone" in message.content.lower():
+        members = message.server.members
+        Members = []
+        for member in members:
+            Members.append(member.mention)
+        await client.send_message(message.channel, Members[random.randint(0,len(Members)-1)])
+
 client.run(os.getenv('BOT_TOKEN'))
+#client.run("") ### DELETE BOT TOKEN WHEN FINISHED EDITS ###
