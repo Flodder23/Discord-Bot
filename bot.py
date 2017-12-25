@@ -23,7 +23,7 @@ async def on_message(message):
             await client.send_message(message.channel, ("<@%s>" % message.author.id + "   " + ("Rock", "Paper", "Scissors")[random.randint(0,2)]))
 
         if "christmas" in message.content.lower():
-            await client.send_message (message.channel, "CHRISTMAS IS TODAY YAY")
+            await client.send_message (message.channel, "<@%s>" % message.author.id + "CHRISTMAS IS TODAY YAY")
 #            until = "<@%s> Christmas is in " % message.author.id
 #            rd = relativedelta(datetime.date(2017,12,25), datetime.datetime.today())
 #            for a in ("years","months","days","hours","minutes","seconds"):
