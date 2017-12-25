@@ -26,6 +26,7 @@ async def on_message(message):
             if today.month == 12 and today.day == 25:
                 until = "<@%s> CHRISTMAS IS TODAY YAY" % message.author.id
             else:
+                today = datetime.datetime.today()
                 nextXMasYear = today.year
                 if today.month == 12 and today.day >= 25:
                     nextXMasYear += 1
