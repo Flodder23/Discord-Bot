@@ -5,7 +5,12 @@ from dateutil.relativedelta import relativedelta
 import datetime
 import os
 
-bot = commands.Bot(description = "Very very helpful bot. For code visit https://github.com/joegibby/Discord-Bot",
+
+if os.getenv('BOT_TOKEN') == None:
+    bot = commands.Bot(description = "Very very helpful bot. For code visit https://github.com/joegibby/Discord-Bot",
+                   command_prefix = "<")
+else:
+    bot = commands.Bot(description = "Very very helpful bot. For code visit https://github.com/joegibby/Discord-Bot",
                    command_prefix = ">")
 
 @bot.event
@@ -93,7 +98,7 @@ class Info:
         The poll should be in the following form:
         >poll question; option1; option2; optionX"""
         msg=msg.split(";")
-        output = ctx.message.author.name + " asked " + msg[0] + "\n"
+        output = "**" + ctx.message.author.name + "** asked **" + msg[0] + "**\n"
         for option in range(1, len(msg)):
             output += ":regional_indicator_" + chr(96 + option) + ": " + msg[option] + "\n"
         await bot.say(output + "\n React with your answer!")
