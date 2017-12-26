@@ -4,6 +4,7 @@ import random
 from dateutil.relativedelta import relativedelta
 import datetime
 import os
+import wolframalpha
 
 
 if os.getenv('BOT_TOKEN') == None:
@@ -74,21 +75,26 @@ class Info:
     @commands.command(pass_context = True)
     async def calc(self, ctx, *, msg):
         """Performs the desired calculation.
-        To use pi etc. type \"math.pi\"
-        (Please do not use for evil! Thanks.)
-        (also, I can't do algebra etc. yet.)"""
-        import wolframalpha
+        Goes through WolframAlpha."""
         client = wolframalpha.Client("TVYA5X-8E78YXA7JL")
         res = client.query(msg)
+        output = ""
+        i = 0
         for pod in res.pods:
             for sub in pod.subpods:
-                await bot.send_message(ctx.message.channel, sub["img"]["@src"]) #send_file
+                if i == 5:
+                    await bot.send_message(ctx.message.channel, output)
+                    i = 0
+                    output = ""
+                output += sub["img"]["@src"] + " "
+                i += 1
+        await bot.send_message(ctx.message.channel, output)
 
     @commands.command(pass_context = True)
     async def poll(self, ctx, *, msg):
         """Creates a poll.
         The poll should be in the following form:
-        >poll question; option1; option2; optionX"""
+        >poll question; option1; option2; etc."""
         msg=msg.split(";")
         output = "**" + ctx.message.author.name + "** asked **" + msg[0] + "**\n"
         for option in range(1, len(msg)):
