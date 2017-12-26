@@ -62,9 +62,20 @@ class Info:
         To use pi etc. type \"math.pi\"
         (Please do not use for evil! Thanks.)
         (also, I can't do algebra etc. yet.)"""
-        if "math" in msg:
-            import math
-        await bot.say(msg + " = " + str(eval(msg)))
+        if not ("os" in msg.lower() or
+                "quit" in msg.lower() or
+                "while" in msg.lower() or
+                "if" in msg.lower() or
+                "await" in msg.lower() or
+                "print" in msg.lower()):
+            if "math" in msg:
+                import math
+            try:
+                await bot.say(msg + " = " + str(eval(msg)))
+            except:
+                await bot.say("Sorry, something went wrong.")
+        else:
+            await bot.say("Stop trying to hack me.")
 
 @bot.event
 async def on_message(msg):
