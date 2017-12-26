@@ -16,6 +16,7 @@ else:
 @bot.event
 async def on_ready():
     print("Ready")
+    await bot.change_presence(game=discord.Game(name="Type >help for help"))
 
 class Games:
     @commands.command()
