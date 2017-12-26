@@ -92,11 +92,9 @@ class Info:
         """Creates a poll.
         The poll should be in the following form:
         >poll question; option1; option2; optionX"""
-        print("Polling...")
         msg=msg.split(";")
-        print(msg)
         output = ctx.message.author.name + " asked " + msg[0] + "\n"
-        for option in range(1, len(msg) - 1):
+        for option in range(1, len(msg)):
             output += ":regional_indicator_" + chr(96 + option) + ": " + msg[option] + "\n"
         await bot.say(output + "\n React with your answer!")
 
