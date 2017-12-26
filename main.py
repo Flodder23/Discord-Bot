@@ -61,6 +61,7 @@ async def on_message(msg):
         await bot.send_message(msg.channel, (random.choice(
             ("Light theme sucks.",
              "Never take a shot of really hot sauce."))))
+    await bot.process_commands(msg)
 
 if os.getenv('BOT_TOKEN') == None:
     print("Running using locally stored value for token")
