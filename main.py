@@ -71,27 +71,18 @@ class Info:
                     until += str(rd.__dict__[a]) + " " + a
         await bot.say(until)
 
-    @commands.command()
-    async def calc(self, *, msg):
+    @commands.command(pass_context = True)
+    async def calc(self, ctx, *, msg):
         """Performs the desired calculation.
         To use pi etc. type \"math.pi\"
         (Please do not use for evil! Thanks.)
         (also, I can't do algebra etc. yet.)"""
-        if not ("os" in msg.lower() or
-                "quit" in msg.lower() or
-                "while" in msg.lower() or
-                "if" in msg.lower() or
-                "await" in msg.lower() or
-                "print" in msg.lower() or
-                "import" in msg.lower()):
-            if "math" in msg:
-                import math
-            try:
-                await bot.say(msg + " = " + str(eval(msg)))
-            except:
-                await bot.say("Sorry, something went wrong.")
-        else:
-            await bot.say("Stop trying to hack me.")
+        import wolframalpha
+        client = wolframalpha.Client("TVYA5X-8E78YXA7JL")
+        res = client.query(msg)
+        for pod in res.pods:
+            for sub in pod.subpods:
+                await bot.send_message(ctx.message.channel, sub["img"]["@src"]) #send_file
 
     @commands.command(pass_context = True)
     async def poll(self, ctx, *, msg):
