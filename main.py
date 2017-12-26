@@ -46,6 +46,6 @@ if os.getenv('BOT_TOKEN') == None:
     print("Running using locally stored value for token")
     bot.run(open("token.txt", "r").read())
 else:
-    bot.run(os.getenv('BOT_TOKEN'))
     print("Running using Heroku config value for token")
+    bot.run(os.getenv('BOT_TOKEN'))
 
