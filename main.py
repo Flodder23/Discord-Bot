@@ -78,17 +78,11 @@ class Info:
         Goes through WolframAlpha."""
         client = wolframalpha.Client("TVYA5X-8E78YXA7JL")
         res = client.query(msg)
-        output = ""
-        i = 0
+        em = discord.Embed()
         for pod in res.pods:
             for sub in pod.subpods:
-                if i == 5:
-                    await bot.send_message(ctx.message.channel, output)
-                    i = 0
-                    output = ""
-                output += sub["img"]["@src"] + " "
-                i += 1
-        await bot.send_message(ctx.message.channel, output)
+                em.set_image(url=sub["img"]["@src"])
+                await bot.say(embed=em)
 
     @commands.command(pass_context = True)
     async def poll(self, ctx, *, msg):
