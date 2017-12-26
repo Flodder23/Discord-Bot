@@ -29,6 +29,9 @@ class Games:
         """Sends some spam.
         You can specify how much spam with a number after the >spam command"""
         try:
+            if int(msg) > 50:
+                await bot.say("That is too much spam. I will only spam 50x")
+                msg = "50"
             for _ in range(int(msg)):
                 await bot.say("This is spam.")
         except:
@@ -67,7 +70,8 @@ class Info:
                 "while" in msg.lower() or
                 "if" in msg.lower() or
                 "await" in msg.lower() or
-                "print" in msg.lower()):
+                "print" in msg.lower() or
+                "import" in msg.lower()):
             if "math" in msg:
                 import math
             try:
@@ -76,6 +80,19 @@ class Info:
                 await bot.say("Sorry, something went wrong.")
         else:
             await bot.say("Stop trying to hack me.")
+
+    @commands.command(pass_context = True)
+    async def poll(self, ctx, *, msg):
+        """Creates a poll.
+        The poll should be in the following form:
+        >poll question; option1; option2; optionX"""
+        print("Polling...")
+        msg=msg.split(";")
+        print(msg)
+        output = ctx.message.author.name + " asked " + msg[0] + "\n"
+        for option in range(1, len(msg) - 1):
+            output += ":regional_indicator_" + chr(96 + option) + ": " + msg[option] + "\n"
+        await bot.say(output + "\n React with your answer!")
 
 @bot.event
 async def on_message(msg):
