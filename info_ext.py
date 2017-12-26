@@ -3,6 +3,7 @@ from discord.ext import commands
 import wolframalpha
 from dateutil.relativedelta import relativedelta
 import datetime
+import google
 
 class Info:
     def __init__(self, bot):
@@ -50,6 +51,41 @@ class Info:
         for option in range(1, len(msg)):
             output += ":regional_indicator_" + chr(96 + option) + ": " + msg[option] + "\n"
         await self.bot.say(output + "\n React with your answer!")
+
+    @commands.command()
+    async def google(self, *, query):
+        """Returns he results of a google search.
+        Should be written as:
+            >google [no. of results] [query]
+        eg.:
+            >google 5 cat videos"""
+        try:
+            no_requested = int(query.split(" ")[0])
+            query = query.split(" ")
+            q = ""
+            for a in query[1:]:
+                q += a + " "
+            query = q
+        except:
+            no_requested = 5
+        results = google.search(query, start=0, stop=no_requested*2)
+        urls = []
+        for url in results:
+            urls.append(url)
+
+        ignore = []
+        for a in range(len(urls)):
+            for b in range(len(urls)):
+                if a != b and urls[a] in urls[b]:
+                    ignore.append(b)
+        no_given = 0
+        for a in range(len(urls)):
+            if not a in ignore:
+                no_given += 1
+                if no_given <= no_requested:
+                    await self.bot.say(urls[a])
+                else:
+                    break
 
 def setup(bot):
     bot.add_cog(Info(bot))
