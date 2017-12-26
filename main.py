@@ -45,14 +45,25 @@ async def rps():
     await bot.say(random.choice(("Rock", "Paper", "Scissors")))
 
 @bot.command()
-async def calc(*, message):
+async def calc(*, msg):
     """Performs the desired calculation.
     To use pi etc. type \"math.pi\"
     (Please do not use for evil! Thanks.)
     (also, I can't do algebra etc. yet.)"""
-    if "math" in message:
+    if "math" in msg:
         import math
-    await bot.say(message + " = " + str(eval(message)))
+    await bot.say(msg + " = " + str(eval(msg)))
+
+@bot.command(pass_context = True)
+async def spam(ctx, *, msg):
+    """Sends some spam.
+    You can specify how much spam with a number after the >spam command"""
+    try:
+        for _ in range(int(msg)):
+            await bot.say("This is spam.")
+    except:
+        for _ in range(10):
+            await bot.say("This is spam.")
 
 @bot.event
 async def on_message(msg):
