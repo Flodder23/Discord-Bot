@@ -44,6 +44,16 @@ async def rps():
     (You are expected to claim your action after the \"rps\")"""
     await bot.say(("Rock", "Paper", "Scissors")[random.randint(0,2)])
 
+@bot.command()
+async def calc(*, message):
+    """Performs the desired calculation.
+    To use pi etc. type \"math.pi\"
+    (Please do not use for evil! Thanks.)
+    (also, I can't do algebra etc. yet.)"""
+    if "math" in message:
+        import math
+    await bot.say(message + " = " + str(eval(message)))
+
 if os.getenv('BOT_TOKEN') == None:
     print("Running using locally stored value for token")
     bot.run(open("token.txt", "r").read())
