@@ -68,7 +68,10 @@ async def on_message(msg):
             for member in members:
                 Members.append(member.mention)
             await bot.send_message(msg.channel,
-                                   Members[random.randint(0,len(Members)-1)])
+                                   random.choice(("I choose... ",
+                                                 "How about ",
+                                                 "I'd go for ")) +
+                                   random.choice(Members))
     await bot.process_commands(msg)
 
 if os.getenv('BOT_TOKEN') == None:
