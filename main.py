@@ -28,7 +28,7 @@ async def christmas():
         if today.month == 12 and today.day >= 25:
             nextXMasYear += 1
         until = "Christmas is in "
-        rd = relativedelta(datetime.date(2017,12,25), datetime.datetime.today())
+        rd = relativedelta(datetime.date(nextXMasYear,12,25), datetime.datetime.today())
         for a in ("years","months","days","hours","minutes","seconds"):
             if rd.__dict__[a] != 0:
                 if until != "Christmas is in ":
@@ -42,5 +42,10 @@ async def rps():
     (You are expected to claim your action after the \"rps\")"""
     await bot.say(("Rock", "Paper", "Scissors")[random.randint(0,2)])
 
-bot.run(os.getenv('BOT_TOKEN'))
-#bot.run("") ### DELETE BOT TOKEN WHEN FINISHED EDITS ###
+if os.getenv('BOT_TOKEN') == None:
+    print("Running using locally stored value for token")
+    bot.run(open("token.txt", "r").read())
+else:
+    bot.run(os.getenv('BOT_TOKEN'))
+    print("Running using Heroku config value for token")
+
