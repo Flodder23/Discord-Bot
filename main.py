@@ -61,6 +61,14 @@ async def on_message(msg):
         await bot.send_message(msg.channel, (random.choice(
             ("Light theme sucks.",
              "Never take a shot of really hot sauce."))))
+    if msg.author.id != "394502938094993410" :
+        if "@someone" in msgTxt or "@anyone" in msgTxt:
+            members = msg.server.members
+            Members = []
+            for member in members:
+                Members.append(member.mention)
+            await bot.send_message(msg.channel,
+                                   Members[random.randint(0,len(Members)-1)])
     await bot.process_commands(msg)
 
 if os.getenv('BOT_TOKEN') == None:
