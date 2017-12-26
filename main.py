@@ -14,6 +14,8 @@ async def on_ready():
 
 @bot.command()
 async def ping():
+    """Checks the bot is working.
+    Should reply with "Pong!\"."""
     await bot.say("Pong!")
 
 @bot.command()
