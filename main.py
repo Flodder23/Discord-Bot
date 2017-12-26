@@ -54,6 +54,14 @@ async def calc(*, message):
         import math
     await bot.say(message + " = " + str(eval(message)))
 
+@bot.event
+async def on_message(msg):
+    msgTxt = msg.content.lower()
+    if "<@!162716870506577920>" in msgTxt :# or "matej" in msgTxt:
+        await bot.send_message(msg.channel, (random.choice(
+            ("Light theme sucks.",
+             "Never take a shot of really hot sauce."))))
+
 if os.getenv('BOT_TOKEN') == None:
     print("Running using locally stored value for token")
     bot.run(open("token.txt", "r").read())
