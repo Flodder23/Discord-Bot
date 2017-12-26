@@ -42,7 +42,7 @@ async def christmas():
 async def rps():
     """Replies with Rock, Paper or Scissors.
     (You are expected to claim your action after the \"rps\")"""
-    await bot.say(("Rock", "Paper", "Scissors")[random.randint(0,2)])
+    await bot.say(random.choice(("Rock", "Paper", "Scissors")))
 
 @bot.command()
 async def calc(*, message):
