@@ -27,13 +27,19 @@ class Games:
     @commands.command(pass_context = True)
     async def spam(self, ctx, *, msg):
         """Sends some spam.
-        You can specify how much spam with a number after the >spam command"""
+        You can specify how much spam and what to spam with a number after the >spam command
+        eg. >spam 5 Hello There! would sens "Hello There!" 5 times."""
+        msg.split(" ")
         try:
-            if int(msg) > 50:
+            if int(msg[0]) > 50:
                 await bot.say("That is too much spam. I will only spam 50x")
-                msg = "50"
-            for _ in range(int(msg)):
-                await bot.say("This is spam.")
+                msg[0] = "50"
+            try:
+                for _ in range(int(msg[0])):
+                    await bot.say(msg[1:])
+            except:
+                for _ in range(int(msg[0])):
+                    await bot.say("This is spam.")
         except:
             for _ in range(10):
                 await bot.say("This is spam.")
