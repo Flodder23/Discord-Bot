@@ -91,13 +91,16 @@ class Info:
     async def define(self, word):
         """Defines the given word.
         This one sometimes takes a while to go through."""
-        d = PyDictionary().meaning("meaning").items()
-        output = "`"
-        for a in d:
-            output += "\n\n**" + a[0] + "**"
-            for b in a[1]:
-                output += "\n" + b
-        self.bot.say(output + "`")
+        try:
+            d = PyDictionary().meaning(word).items()
+            output = ""
+            for a in d:
+                output += "\n\n**" + a[0] + "**"
+                for b in a[1]:
+                    output += "\n" + b
+        except:
+            ouput = "Sorry, something went wrong."
+        await self.bot.say(output)
 
 def setup(bot):
     bot.add_cog(Info(bot))
