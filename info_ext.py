@@ -4,6 +4,7 @@ import wolframalpha
 from dateutil.relativedelta import relativedelta
 import datetime
 import google
+from PyDictionary import PyDictionary
 
 class Info:
     def __init__(self, bot):
@@ -86,6 +87,17 @@ class Info:
                     await self.bot.say(urls[a])
                 else:
                     break
+    @commands.command()
+    async def define(self, word):
+        """Defines the given word.
+        This one sometimes takes a while to go through."""
+        d = PyDictionary().meaning("meaning").items()
+        output = "`"
+        for a in d:
+            output += "\n\n**" + a[0] + "**"
+            for b in a[1]:
+                output += "\n" + b
+        self.bot.say(output + "`")
 
 def setup(bot):
     bot.add_cog(Info(bot))

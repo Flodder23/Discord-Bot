@@ -1,8 +1,6 @@
 import discord
 from discord.ext import commands
 import random
-from dateutil.relativedelta import relativedelta
-import datetime
 import os
 
 
