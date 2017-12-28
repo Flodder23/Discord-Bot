@@ -104,7 +104,7 @@ class Info:
         await self.bot.say(output)
 
     @commands.command()
-    async def choose(self, choices):
+    async def choose(self, *, choices):
         """Selects a choice at random for you.
         seperate choices with semi-colons, like:
             choice1; choice2; choice3; etc."""
