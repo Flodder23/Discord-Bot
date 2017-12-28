@@ -106,9 +106,39 @@ class Info:
     @commands.command()
     async def choose(self, *, choices):
         """Selects a choice at random for you.
-        seperate choices with semi-colons, like:
-            choice1; choice2; choice3; etc."""
-        await self.bot.say(random.choice(choices.split(";")))
+        Seperate choices with semi-colons, like:
+            >choose choice1; choice2; choice3; etc.
+        You can also specify how many options you want to be chosen, like:
+            >choose amount: choice1; choice2; etc.
+        Note the use of a colon here, not a semi-colon."""
+        choices = choices.split(";")
+        if ":" in choices[0]:
+            try:
+                amount = int(choices[0].split(":")[0])
+                choices.append(":".join(choices[0].split(":")[1:]))
+                startAt = 1
+                if amount <= 0 or amount >= len(choices) - 1:
+                    NO
+            except:
+                print("There was an error.")
+                amount = 1
+        else:
+            amount = 1
+            startAt = 0
+
+        chosen = []
+        a = ""
+        for _ in range(amount):
+            while a in chosen:
+                a = random.randint(startAt, len(choices) - 1)
+            chosen.append(a)
+        print(chosen)
+        output = random.choice(("I choose...", "How about", "I'd go for")) + "\n"
+        for a in chosen:
+            if not a == "":
+                print(choices[a])
+                output += choices[a] + "\n"
+        await self.bot.say(output)
 
 def setup(bot):
     bot.add_cog(Info(bot))
