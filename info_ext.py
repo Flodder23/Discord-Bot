@@ -120,7 +120,6 @@ class Info:
                 if amount <= 0 or amount >= len(choices) - 1:
                     NO
             except:
-                print("There was an error.")
                 amount = 1
         else:
             amount = 1
@@ -132,11 +131,9 @@ class Info:
             while a in chosen:
                 a = random.randint(startAt, len(choices) - 1)
             chosen.append(a)
-        print(chosen)
         output = random.choice(("I choose...", "How about", "I'd go for")) + "\n"
         for a in chosen:
             if not a == "":
-                print(choices[a])
                 output += choices[a] + "\n"
         await self.bot.say(output)
 
