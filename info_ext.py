@@ -5,6 +5,7 @@ from dateutil.relativedelta import relativedelta
 import datetime
 import google
 from PyDictionary import PyDictionary
+import random
 
 class Info:
     def __init__(self, bot):
@@ -101,6 +102,13 @@ class Info:
         except:
             ouput = "Sorry, something went wrong."
         await self.bot.say(output)
+
+    @commands.command()
+    async def choose(self, choices):
+        """Selects a choice at random for you.
+        seperate choices with semi-colons, like:
+            choice1; choice2; choice3; etc."""
+        await self.bot.say(random.choice(choices.split(";")))
 
 def setup(bot):
     bot.add_cog(Info(bot))
