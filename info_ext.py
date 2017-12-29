@@ -128,7 +128,7 @@ class Info:
         chosen = []
         a = ""
         for _ in range(amount):
-            while a in chosen:
+            while a in chosen or a == "":
                 a = random.randint(startAt, len(choices) - 1)
             chosen.append(a)
         output = random.choice(("I choose...", "How about", "I'd go for")) + "\n"
