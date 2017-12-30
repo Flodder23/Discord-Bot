@@ -137,5 +137,12 @@ class Info:
                 output += choices[a] + "\n"
         await self.bot.say(output)
 
+    @commands.command(pass_context = True)
+    async def call (self, ctx, *, msg):
+        """Changes someone's nickname.
+        Should look like:
+        >call Member's current name; Member's new name"""
+        await self.bot.change_nickname(ctx.message.server.get_member_named(msg.split(";")[0]), msg.split(";")[1])
+
 def setup(bot):
     bot.add_cog(Info(bot))

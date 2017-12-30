@@ -4,7 +4,7 @@ import random
 import os
 
 
-if os.getenv('BOT_TOKEN') == None:
+if os.getenv('BOT_TOKEN') is None:
     bot = commands.Bot(description = "Very very helpful bot. For code visit https://github.com/joegibby/Discord-Bot",
                    command_prefix = "<")
 else:
@@ -38,7 +38,7 @@ async def on_message(msg):
                                    random.choice(Members))
     await bot.process_commands(msg)
 
-if os.getenv('BOT_TOKEN') == None:
+if os.getenv('BOT_TOKEN') is None:
     print("Running using locally stored value for token")
     bot.run(open("token.txt", "r").read())
 else:

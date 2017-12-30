@@ -37,6 +37,6 @@ class Games:
         except:
             for _ in range(10):
                 await self.bot.say(msg)
-  
+
 def setup(bot):
     bot.add_cog(Games(bot))
