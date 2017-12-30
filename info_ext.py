@@ -7,6 +7,7 @@ import google
 from PyDictionary import PyDictionary
 import random
 
+
 class Info:
     def __init__(self, bot):
         self.bot = bot
@@ -23,15 +24,15 @@ class Info:
             if today.month == 12 and today.day >= 25:
                 nextXMasYear += 1
             until = "Christmas is in "
-            rd = relativedelta(datetime.date(nextXMasYear,12,25), datetime.datetime.today())
-            for a in ("years","months","days","hours","minutes","seconds"):
+            rd = relativedelta(datetime.date(nextXMasYear, 12, 25), datetime.datetime.today())
+            for a in ("years", "months", "days", "hours", "minutes", "seconds"):
                 if rd.__dict__[a] != 0:
                     if until != "Christmas is in ":
                         until += ", "
                     until += str(rd.__dict__[a]) + " " + a
         await self.bot.say(until)
 
-    @commands.command(pass_context = True)
+    @commands.command(pass_context=True)
     async def calc(self, ctx, *, msg):
         """Performs the desired calculation.
         Goes through WolframAlpha."""
@@ -43,12 +44,12 @@ class Info:
                 em.set_image(url=sub["img"]["@src"])
                 await self.bot.say(embed=em)
 
-    @commands.command(pass_context = True)
+    @commands.command(pass_context=True)
     async def poll(self, ctx, *, msg):
         """Creates a poll.
         The poll should be in the following form:
         >poll question; option1; option2; etc."""
-        msg=msg.split(";")
+        msg = msg.split(";")
         output = "**" + ctx.message.author.name + "** asked **" + msg[0] + "**\n"
         for option in range(1, len(msg)):
             output += ":regional_indicator_" + chr(96 + option) + ": " + msg[option] + "\n"
@@ -70,7 +71,7 @@ class Info:
             query = q
         except:
             no_requested = 5
-        results = google.search(query, start=0, stop=no_requested*2)
+        results = google.search(query, start=0, stop=no_requested * 2)
         urls = []
         for url in results:
             urls.append(url)
@@ -88,6 +89,7 @@ class Info:
                     await self.bot.say(urls[a])
                 else:
                     break
+
     @commands.command()
     async def define(self, word):
         """Defines the given word.
@@ -137,12 +139,13 @@ class Info:
                 output += choices[a] + "\n"
         await self.bot.say(output)
 
-    @commands.command(pass_context = True)
-    async def call (self, ctx, *, msg):
+    @commands.command(pass_context=True)
+    async def call(self, ctx, *, msg):
         """Changes someone's nickname.
         Should look like:
         >call Member's current name; Member's new name"""
         await self.bot.change_nickname(ctx.message.server.get_member_named(msg.split(";")[0]), msg.split(";")[1])
+
 
 def setup(bot):
     bot.add_cog(Info(bot))

@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import random
 
+
 class Games:
     def __init__(self, bot):
         self.bot = bot
@@ -18,8 +19,8 @@ class Games:
         Should reply with "Pong!\"."""
         await self.bot.say("Pong!")
 
-    @commands.command(pass_context = True)
-    async def spam(self, ctx, *, msg = "This is spam"):
+    @commands.command(pass_context=True)
+    async def spam(self, ctx, *, msg="This is spam"):
         """Sends some spam.
         You can specify how much spam and what to spam with a number after the >spam command
         eg. >spam 5 Hello There! would sens "Hello There!" 5 times."""
@@ -37,6 +38,7 @@ class Games:
         except:
             for _ in range(10):
                 await self.bot.say(msg)
+
 
 def setup(bot):
     bot.add_cog(Games(bot))
