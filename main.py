@@ -23,9 +23,10 @@ async def on_ready():
 async def on_message(msg):
     msgTxt = msg.content.lower()
     if "<@!162716870506577920>" in msgTxt:  # or "matej" in msgTxt:
-        await bot.send_message(msg.channel, (random.choice(
-            ("Light theme sucks.",
-             "Never take a shot of really hot sauce."))))
+        await bot.send_message(msg.channel, random.choice(("Light theme sucks.",
+                                                           "Never take a shot of really hot sauce.")))
+    if "<@!144543622015090690>" in msgTxt:
+        await bot.send_message(msg.channel, "sosig")
     if msg.author.id != "394502938094993410":
         if "@someone" in msgTxt or "@anyone" in msgTxt:
             members = msg.server.members
@@ -38,6 +39,11 @@ async def on_message(msg):
                                                   "I'd go for ")) +
                                    random.choice(Members))
     await bot.process_commands(msg)
+
+
+@bot.event
+async def on_command_error(error, ctx):
+    await bot.send_message(ctx.message.channel, "Sorry, something went wrong.")
 
 
 if os.getenv('BOT_TOKEN') is None:

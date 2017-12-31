@@ -90,10 +90,9 @@ class Info:
                 else:
                     break
 
-    @commands.command()
+    @commands.command(name="def")
     async def define(self, word):
-        """Defines the given word.
-        This one sometimes takes a while to go through."""
+        """Defines the given word."""
         try:
             d = PyDictionary().meaning(word).items()
             output = ""
