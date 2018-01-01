@@ -60,16 +60,14 @@ class Info:
     async def google(self, *, query):
         """Returns he results of a google search.
         Should be written as:
-            >google [no. of results] [query]
+            >google [no. of results] <query>
         eg.:
-            >google 5 cat videos"""
+            >google 5 cat videos
+        or:
+            >google cat videos"""
         try:
             no_requested = int(query.split(" ")[0])
-            query = query.split(" ")
-            q = ""
-            for a in query[1:]:
-                q += a + " "
-            query = q
+            query = " ".join(query.split(" "))[1:]
         except:
             no_requested = 5
         results = google.search(query, start=0, stop=no_requested * 2)
@@ -159,7 +157,7 @@ class Info:
     async def wiki(self, *, query):
         """Gives the summary of the wikipedia article.
         Should look like:
-            >wiki <no of sentences> <title>
+            >wiki {no of sentences] <title>
         if no of sentences not specified default is 3."""
         try:
             sentences = int(query.split(" ")[0])
