@@ -5,3 +5,4 @@ asyncio
 wolframalpha
 google
 PyDictionary
+wikipedia

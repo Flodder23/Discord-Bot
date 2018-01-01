@@ -6,6 +6,7 @@ import datetime
 import google
 from PyDictionary import PyDictionary
 import random
+import wikipedia
 
 
 class Info:
@@ -150,9 +151,31 @@ class Info:
         else:
             if len(msg.split(" ")) == 2:
                 await self.bot.change_nickname(ctx.message.server.get_member_named(msg.split(" ")[0]),
-                                                                                   msg.split(" ")[1])
+                                               msg.split(" ")[1])
             else:
                 NO
+
+    @commands.command()
+    async def wiki(self, *, query):
+        """Gives the summary of the wikipedia article.
+        Should look like:
+            >wiki <no of sentences> <title>
+        if no of sentences not specified default is 3."""
+        try:
+            sentences = int(query.split(" ")[0])
+            query = " ".join(query.split(" ")[1:])
+        except:
+            sentences = 3
+        try:
+            output = "<https://en.wikipedia.org/wiki/%s>\n" % query
+            output += wikipedia.summary(query, sentences=sentences)
+            await self.bot.say(output)
+        except wikipedia.exceptions.DisambiguationError as e:
+            output = "There are multiple pages with that name. Did you mean:"
+            for suggestion in e.options:
+                if suggestion.lower().startswith(query.lower() + " (") :
+                    output += "\n" + suggestion
+            await self.bot.say(output)
 
 
 def setup(bot):
