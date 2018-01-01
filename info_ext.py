@@ -144,7 +144,7 @@ class Info:
         Should look like:
             >call current_name new_name
         Or if one of the names is 2+ words:
-            >call Member's current name; Member's new name"""
+            >call current name; new name"""
         if ";" in msg:
             await self.bot.change_nickname(ctx.message.server.get_member_named(msg.split(";")[0]), msg.split(";")[1])
         else:

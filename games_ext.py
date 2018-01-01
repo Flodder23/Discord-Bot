@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import random
+import time
 
 
 class Games:
@@ -17,7 +18,9 @@ class Games:
     async def ping(self):
         """Checks the bot is working.
         Should reply with "Pong!\"."""
+        t = time.time()
         await self.bot.say("Pong!")
+        await self.bot.say(str(int((time.time() - t) * 1000)) + "ms ping.")
 
     @commands.command(pass_context=True)
     async def spam(self, ctx, *, msg="This is spam"):
