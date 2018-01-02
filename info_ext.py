@@ -165,7 +165,7 @@ class Info:
         except:
             sentences = 3
         try:
-            output = "<https://en.wikipedia.org/wiki/%s>\n" % query
+            output = "<https://en.wikipedia.org/wiki/%s>\n" % "_".join(query.split(" "))
             output += wikipedia.summary(query, sentences=sentences)
             await self.bot.say(output)
         except wikipedia.exceptions.DisambiguationError as e:
