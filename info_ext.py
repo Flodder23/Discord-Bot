@@ -36,14 +36,51 @@ class Info:
     @commands.command(pass_context=True)
     async def calc(self, ctx, *, msg):
         """Performs the desired calculation.
+        Should look like:
+            >calc pic <calculation>
+        to get pictures of the result or:
+            >calc txt <calculation>
+        for test of the result.
+
         Goes through WolframAlpha."""
-        client = wolframalpha.Client("TVYA5X-8E78YXA7JL")
-        res = client.query(msg)
-        em = discord.Embed()
-        for pod in res.pods:
-            for sub in pod.subpods:
-                em.set_image(url=sub["img"]["@src"])
-                await self.bot.say(embed=em)
+        try:
+            type = "pic"
+            if msg.startswith("txt ") or msg.startswith("pic "):
+                type = msg.split()[0]
+                msg = " ".join(msg.split()[1:])
+            client = wolframalpha.Client("TVYA5X-8E78YXA7JL")
+            res = client.query(msg)
+            em = discord.Embed()
+            for pod in res.pods:
+                for sub in pod.subpods:
+                    if type == "pic":
+                        try:
+                            em.set_image(url=sub["img"]["@src"])
+                            await self.bot.say(embed=em)
+                        except:
+                            pass
+                    else:
+                        try:
+                            await self.bot.say(sub["plaintext"])
+                        except:
+                            pass
+        except:
+            try:
+                if res["@success"] == "false":
+                    output = "Sorry, I didn't understand you. "
+                    try:
+                        if int(res["didyoumeans"]["@count"]) > 0:
+                            output += "Did you mean: " + res["didyoumeans"]["didyoumean"]["#text"]
+                    except:
+                        pass
+                    try:
+                        if int(res["tips"]["@count"]) > 0:
+                            output += res["tips"]["tip"]["@text"]
+                    except:
+                        pass
+                    await self.bot.say(output)
+            except:
+                pass
 
     @commands.command(pass_context=True)
     async def poll(self, ctx, *, msg):
@@ -171,7 +208,7 @@ class Info:
         except wikipedia.exceptions.DisambiguationError as e:
             output = "There are multiple pages with that name. Did you mean:"
             for suggestion in e.options:
-                if suggestion.lower().startswith(query.lower() + " (") :
+                if suggestion.lower().startswith(query.lower() + " ("):
                     output += "\n" + suggestion
             await self.bot.say(output)
 
