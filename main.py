@@ -20,7 +20,7 @@ async def every_minute():
     Adam = []
     for server in bot.servers:
         for member in server.members:
-            if member.id in (IDs[3]):#, IDs[0]): #Adam
+            if member.id in (IDs[3], IDs[0]):
                 Adam.append(member)
     if not Adam == []:
         while not bot.is_closed:
@@ -28,7 +28,7 @@ async def every_minute():
             if today.hour == 0 and today.minute == 0:
                 for a in Adam:
                     await bot.send_message(a, get_time_until_xmas(minsec = False))
-            await asyncio.sleep(60)
+            await asyncio.sleep(15)
 
 @bot.event
 async def on_ready():
