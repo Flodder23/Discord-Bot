@@ -17,7 +17,7 @@ else:
 
 async def every_minute():
     await bot.wait_until_ready()
-    Adam = []
+    Spammed = []
     for server in bot.servers:
         for member in server.members:
             if member.id in (IDs[3], IDs[0]):
@@ -29,7 +29,7 @@ async def every_minute():
         time = [0, 0]
     else:
         time = time.split("\n")
-    if not Adam == []:
+    if not Spammed == []:
         while not bot.is_closed:
             today = datetime.datetime.today()
             if today.hour == int(time[0]) and today.minute == int(time[1]):
