@@ -21,7 +21,9 @@ async def every_minute():
     for server in bot.servers:
         for member in server.members:
             if member.id in (IDs[3], IDs[0]):
-                Adam.append(member)
+                Spammed.append(member)
+            if member.id == IDs[4]:
+                Nathan = member
     time = os.getenv("TimeToSpam")
     if time is None:
         time = [0, 0]
@@ -31,8 +33,11 @@ async def every_minute():
         while not bot.is_closed:
             today = datetime.datetime.today()
             if today.hour == int(time[0]) and today.minute == int(time[1]):
-                for a in Adam:
-                    await bot.send_message(a, get_time_until_xmas(minsec = False))
+                for spammed in Spammed:
+                    await bot.send_message(spammed, get_time_until_xmas(minsec = False))
+
+            if random.randint(0, 1000) == 666:
+                await bot.send_message(Nathan, "Adam says hi")
             await asyncio.sleep(60)
 
 @bot.event
@@ -72,7 +77,7 @@ async def on_command_error(error, ctx):
 
 IDs = os.getenv("IDS")
 if IDs is None:
-    IDs = open("ids.txt", "r").read().split("\n")[:4]
+    IDs = open("ids.txt", "r").read().split("\n")[:5]
 else:
     IDs = IDs.split("\n")
 bot.loop.create_task(every_minute())
