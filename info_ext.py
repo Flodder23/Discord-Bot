@@ -14,24 +14,10 @@ class Info:
         self.bot = bot
 
     @commands.command()
-    async def christmas(self):
+    async def xmas(self):
         """Tells you how long until Christmas.
         As requested by Adam."""
-        today = datetime.datetime.today()
-        if today.month == 12 and today.day == 25:
-            until = "CHRISTMAS IS TODAY YAY"
-        else:
-            nextXMasYear = today.year
-            if today.month == 12 and today.day >= 25:
-                nextXMasYear += 1
-            until = "Christmas is in "
-            rd = relativedelta(datetime.date(nextXMasYear, 12, 25), datetime.datetime.today())
-            for a in ("years", "months", "days", "hours", "minutes", "seconds"):
-                if rd.__dict__[a] != 0:
-                    if until != "Christmas is in ":
-                        until += ", "
-                    until += str(rd.__dict__[a]) + " " + a
-        await self.bot.say(until)
+        await self.bot.say(get_time_until_xmas())
 
     @commands.command(pass_context=True)
     async def calc(self, ctx, *, msg):
@@ -211,6 +197,27 @@ class Info:
                 if suggestion.lower().startswith(query.lower() + " ("):
                     output += "\n" + suggestion
             await self.bot.say(output)
+
+
+def get_time_until_xmas(minsec = True):
+    today = datetime.date.today()
+    nextXMasYear = today.year
+    if today.month == 12 and today.day >= 25:
+        nextXMasYear += 1
+    until = "Christmas is in "
+    units = ["years", "months", "days"]
+    if minsec:
+        rd = relativedelta(datetime.datetime(nextXMasYear, 12, 25), datetime.datetime.today())
+        for unit in ("hours", "minutes", "seconds"):
+            units.append(unit)
+    else:
+        rd = relativedelta(datetime.date(nextXMasYear, 12, 25), datetime.date.today())
+    for a in units:
+        if rd.__dict__[a] != 0:
+            if until != "Christmas is in ":
+                until += ", "
+            until += str(rd.__dict__[a]) + " " + a
+    return until
 
 
 def setup(bot):

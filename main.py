@@ -2,6 +2,9 @@ import discord
 from discord.ext import commands
 import random
 import os
+import asyncio
+import datetime
+from info_ext import get_time_until_xmas
 
 if os.getenv('BOT_TOKEN') is None:
     bot = commands.Bot(description="Very very helpful bot. For code visit https://github.com/joegibby/Discord-Bot",
@@ -10,6 +13,22 @@ else:
     bot = commands.Bot(description="Very very helpful bot. For code visit https://github.com/joegibby/Discord-Bot",
                        command_prefix=">")
 
+
+
+async def every_minute():
+    await bot.wait_until_ready()
+    Adam = []
+    for server in bot.servers:
+        for member in server.members:
+            if member.id in (IDs[3]):#, IDs[0]): #Adam
+                Adam.append(member)
+    if not Adam == []:
+        while not bot.is_closed:
+            today = datetime.datetime.today()
+            if today.hour == 0 and today.minute == 0:
+                for a in Adam:
+                    await bot.send_message(a, get_time_until_xmas(minsec = False))
+            await asyncio.sleep(60)
 
 @bot.event
 async def on_ready():
@@ -22,12 +41,12 @@ async def on_ready():
 @bot.event
 async def on_message(msg):
     msgTxt = msg.content.lower()
-    if "<@!162716870506577920>" in msgTxt:  # or "matej" in msgTxt:
+    if "<@!%s>" % IDs[1] in msgTxt:  # or "matej" in msgTxt:
         await bot.send_message(msg.channel, random.choice(("Light theme sucks.",
                                                            "Never take a shot of really hot sauce.")))
-    if "<@!144543622015090690>" in msgTxt:
+    if "<@!%s>" % IDs[2] in msgTxt:
         await bot.send_message(msg.channel, "sosig")
-    if msg.author.id != "394502938094993410":
+    if msg.author.id != "394502938094993410": #Bot's own ID
         if "@someone" in msgTxt or "@anyone" in msgTxt:
             members = msg.server.members
             Members = []
@@ -45,6 +64,13 @@ async def on_message(msg):
 async def on_command_error(error, ctx):
     await bot.send_message(ctx.message.channel, "Sorry, something went wrong.")
 
+
+IDs = os.getenv("IDS")
+if IDs is None:
+    IDs = open("ids.txt", "r").read().split("\n")[:4]
+else:
+    IDs = IDs.split("\n")
+bot.loop.create_task(every_minute())
 
 if os.getenv('BOT_TOKEN') is None:
     print("Running using locally stored value for token")
