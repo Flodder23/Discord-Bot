@@ -25,14 +25,12 @@ async def every_minute():
     if not Adam == []:
         while not bot.is_closed:
             time = os.getenv("TimeToSpam")
-            print(time)
             if time is None:
                 time = [0, 0]
             else:
                 time = time.split("\n")
-            print(time)
             today = datetime.datetime.today()
-            if today.hour == time[0] and today.minute == time[1]:
+            if today.hour == int(time[0]) and today.minute == int(time[1]):
                 for a in Adam:
                     await bot.send_message(a, get_time_until_xmas(minsec = False))
             await asyncio.sleep(60)
