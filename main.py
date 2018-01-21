@@ -55,10 +55,10 @@ async def on_ready():
 @bot.event
 async def on_message(msg):
     msgTxt = msg.content.lower()
-    if "<@!%s>" % IDs[1] in msgTxt:  # or "matej" in msgTxt:
+    if "<@!%s>" % IDs[1] in msgTxt and os.getenv("SpamMatej") == "Go ahead":
         await bot.send_message(msg.channel, random.choice(("Light theme sucks.",
                                                            "Never take a shot of really hot sauce.")))
-    if "<@!%s>" % IDs[2] in msgTxt:
+    if "<@!%s>" % IDs[2] in msgTxt and os.getenv("SpamDom") == "Go ahead":
         await bot.send_message(msg.channel, "sosig")
     if msg.author.id != "394502938094993410": #Bot's own ID
         if "@someone" in msgTxt or "@anyone" in msgTxt:
