@@ -17,27 +17,31 @@ else:
 
 async def every_minute():
     await bot.wait_until_ready()
-    Spammed = []
     for server in bot.servers:
         for member in server.members:
-            if member.id in (IDs[3], IDs[0]):
-                Spammed.append(member)
-            if member.id == IDs[4]:
+            if member.id == IDs[0]:
+                Adam = member
+            elif member.id == IDs[3]:
+                Joe = member
+            elif member.id == IDs[4]:
                 Nathan = member
     time = os.getenv("TimeToSpam")
     if time is None:
         time = [0, 0]
     else:
         time = time.split("\n")
-    if not Spammed == []:
-        while not bot.is_closed:
+    while not bot.is_closed:
+        if os.getenv("SpamAdam") == "Go ahead":
             today = datetime.datetime.today()
             if today.hour == int(time[0]) and today.minute == int(time[1]):
-                for spammed in Spammed:
-                    await bot.send_message(spammed, get_time_until_xmas(minsec = False))
+                await bot.send_message(Adam, get_time_until_xmas(minsec = False))
+                await bot.send_message(Joe, get_time_until_xmas(minsec=False))
 
+        if os.getenv("SpamNathan") == "Go ahead":
             if random.randint(0, 1000) == 666:
                 await bot.send_message(Nathan, "Adam says hi")
+                await bot.send_message(Joe, "Adam says hi")
+
             await asyncio.sleep(60)
 
 @bot.event
