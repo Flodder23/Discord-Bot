@@ -95,6 +95,7 @@ async def on_message(msg):
             if random.randint(1, int(do_it[1])) < int(do_it[0]):
                 await bot.send_message(msg.channel, "Hello " + " ".join(msg.content.split()[1:]) + ", I'm Joe's Bot.")
         except:
+            pass
 
     await bot.process_commands(msg)
 
