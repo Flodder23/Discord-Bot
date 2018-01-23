@@ -91,7 +91,9 @@ async def on_message(msg):
 
     if msg.content.lower().startswith("i'm ") or msg.content.lower().startswith("im "):
         try:
+            print(os.getenv("SpamBadJoke"))
             do_it = os.getenv("SpamBadJoke").split("\n")
+            print(do_it)
             if random.randint(1, do_it[1]) < do_it[0]:
                 await bot.send_message(msg.channel, "Hello " + " ".join(msg.content.split()[1:]) + ", I'm Joe's Bot.")
         except:
