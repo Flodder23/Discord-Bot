@@ -6,13 +6,16 @@ import asyncio
 import datetime
 from info_ext import get_time_until_xmas
 
-if os.getenv('BOT_TOKEN') is None:
+Token = os.getenv("BOT_TOKEN")
+if Token is None:
+    Token = open("token.txt", "r").read()
+    print("Running using locally stored value for token")
     bot = commands.Bot(description="Very very helpful bot. For code visit https://github.com/joegibby/Discord-Bot",
                        command_prefix="<")
 else:
+    print("Running using Heroku config value for token")
     bot = commands.Bot(description="Very very helpful bot. For code visit https://github.com/joegibby/Discord-Bot",
                        command_prefix=">")
-
 
 
 async def every_minute():
@@ -34,7 +37,7 @@ async def every_minute():
         if os.getenv("SpamAdam") == "Go ahead":
             today = datetime.datetime.today()
             if today.hour == int(time[0]) and today.minute == int(time[1]):
-                await bot.send_message(Adam, get_time_until_xmas(minsec = False))
+                await bot.send_message(Adam, get_time_until_xmas(minsec=False))
                 await bot.send_message(Joe, get_time_until_xmas(minsec=False))
 
         if os.getenv("SpamNathan") == "Go ahead":
@@ -42,14 +45,16 @@ async def every_minute():
                 await bot.send_message(Nathan, "Adam says hi")
                 await bot.send_message(Joe, "Adam says hi")
 
-            await asyncio.sleep(60)
+        await asyncio.sleep(60)
+
 
 @bot.event
 async def on_ready():
-    print("Ready")
     await bot.change_presence(game=discord.Game(name="Type >help for help"))
+    bot.loop.create_task(every_minute())
     bot.load_extension("games_ext")
     bot.load_extension("info_ext")
+    print("Ready")
 
 
 @bot.event
@@ -60,7 +65,7 @@ async def on_message(msg):
                                                            "Never take a shot of really hot sauce.")))
     if "<@!%s>" % IDs[2] in msgTxt and os.getenv("SpamDom") == "Go ahead":
         await bot.send_message(msg.channel, "sosig")
-    if msg.author.id != "394502938094993410": #Bot's own ID
+    if msg.author.id != "394502938094993410":  # Bot's own ID
         if "@someone" in msgTxt or "@anyone" in msgTxt:
             members = msg.server.members
             Members = []
@@ -84,11 +89,5 @@ if IDs is None:
     IDs = open("ids.txt", "r").read().split("\n")[:5]
 else:
     IDs = IDs.split("\n")
-bot.loop.create_task(every_minute())
 
-if os.getenv('BOT_TOKEN') is None:
-    print("Running using locally stored value for token")
-    bot.run(open("token.txt", "r").read())
-else:
-    print("Running using Heroku config value for token")
-    bot.run(os.getenv('BOT_TOKEN'))
+bot.run(Token)

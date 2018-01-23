@@ -27,14 +27,14 @@ class Games:
         """Sends some spam.
         You can specify how much spam and what to spam with a number after the >spam command
         eg. >spam 5 Hello There! would sens "Hello There!" 5 times."""
-        msg.split(" ")
+        msg = msg.split()
         try:
             if int(msg[0]) > 50:
                 await self.bot.say("That is too much spam. I will only spam 50x")
                 msg[0] = "50"
             try:
                 for _ in range(int(msg[0])):
-                    await self.bot.say(msg[1:])
+                    await self.bot.say(" ".join(msg[1:]))
             except:
                 for _ in range(int(msg[0])):
                     await self.bot.say("This is spam.")
