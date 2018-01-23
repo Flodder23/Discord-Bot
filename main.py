@@ -63,7 +63,7 @@ async def on_message(msg):
     if "<@!%s>" % IDs[1] in msgTxt:
         try:
             do_it = os.getenv("SpamMatej").split("\n")
-            if random.randint(1, do_it[1]) < do_it[0]:
+            if random.randint(1, int(do_it[1])) < int(do_it[0]):
                 await bot.send_message(msg.channel, random.choice(("Light theme sucks.",
                                                                    "Never take a shot of really hot sauce.")))
         except:
@@ -72,7 +72,7 @@ async def on_message(msg):
     if "<@!%s>" % IDs[2] in msgTxt:
         try:
             do_it = os.getenv("SpamDom").split("\n")
-            if random.randint(1, do_it[1]) < do_it[0]:
+            if random.randint(1, int(do_it[1])) < int(do_it[0]):
                 await bot.send_message(msg.channel, "sosig")
         except:
             pass
@@ -89,17 +89,12 @@ async def on_message(msg):
                                                   "I'd go for ")) +
                                    random.choice(Members))
 
-    if msg.content.lower().startswith("i'm ") or msg.content.lower().startswith("im "):
+    if msg.content.upper().startswith("I'M ") or msg.content.upper().startswith("IM "):
         try:
-            print(os.getenv("SpamBadJoke"))
             do_it = os.getenv("SpamBadJoke").split("\n")
-            print(do_it)
-            print(random.randint(1, int(do_it[1])), do_it[0])
             if random.randint(1, int(do_it[1])) < int(do_it[0]):
-                print("I got here actually")
                 await bot.send_message(msg.channel, "Hello " + " ".join(msg.content.split()[1:]) + ", I'm Joe's Bot.")
         except:
-            print("Something went wrong")
 
     await bot.process_commands(msg)
 
