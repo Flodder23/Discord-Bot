@@ -94,8 +94,8 @@ async def on_message(msg):
             print(os.getenv("SpamBadJoke"))
             do_it = os.getenv("SpamBadJoke").split("\n")
             print(do_it)
-            print(random.randint(1, do_it[1]), do_it[0])
-            if random.randint(1, do_it[1]) < do_it[0]:
+            print(random.randint(1, int(do_it[1])), do_it[0])
+            if random.randint(1, int(do_it[1])) < int(do_it[0]):
                 print("I got here actually")
                 await bot.send_message(msg.channel, "Hello " + " ".join(msg.content.split()[1:]) + ", I'm Joe's Bot.")
         except:
