@@ -28,12 +28,12 @@ async def every_minute():
                 Joe = member
             elif member.id == IDs[4]:
                 Nathan = member
-    time = os.getenv("TimeToSpam")
-    if time is None:
-        time = [0, 0]
-    else:
-        time = time.split("\n")
     while not bot.is_closed:
+        time = os.getenv("TimeToSpamAdam")
+        if time is None:
+            time = [0, 0]
+        else:
+            time = time.split("\n")
         if os.getenv("SpamAdam") == "Go ahead":
             today = datetime.datetime.today()
             if today.hour == int(time[0]) and today.minute == int(time[1]):
@@ -60,11 +60,23 @@ async def on_ready():
 @bot.event
 async def on_message(msg):
     msgTxt = msg.content.lower()
-    if "<@!%s>" % IDs[1] in msgTxt and os.getenv("SpamMatej") == "Go ahead":
-        await bot.send_message(msg.channel, random.choice(("Light theme sucks.",
-                                                           "Never take a shot of really hot sauce.")))
-    if "<@!%s>" % IDs[2] in msgTxt and os.getenv("SpamDom") == "Go ahead":
-        await bot.send_message(msg.channel, "sosig")
+    if "<@!%s>" % IDs[1] in msgTxt:
+        try:
+            do_it = os.getenv("SpamMatej").split("\n")
+            if random.randint(1, do_it[1]) < do_it[0]:
+                await bot.send_message(msg.channel, random.choice(("Light theme sucks.",
+                                                                   "Never take a shot of really hot sauce.")))
+        except:
+            pass
+
+    if "<@!%s>" % IDs[2] in msgTxt:
+        try:
+            do_it = os.getenv("SpamDom").split("\n")
+            if random.randint(1, do_it[1]) < do_it[0]:
+                await bot.send_message(msg.channel, "sosig")
+        except:
+            pass
+
     if msg.author.id != "394502938094993410":  # Bot's own ID
         if "@someone" in msgTxt or "@anyone" in msgTxt:
             members = msg.server.members
@@ -76,6 +88,15 @@ async def on_message(msg):
                                                   "How about ",
                                                   "I'd go for ")) +
                                    random.choice(Members))
+
+    if msg.content.lower().startswith("i'm ") or msg.content.lower().startswith("im "):
+        try:
+            do_it = os.getenv("SpamBadJoke").split("\n")
+            if random.randint(1, do_it[1]) < do_it[0]:
+                await bot.send_message(msg.channel, "Hello " + " ".join(msg.content.split()[1:]) + ", I'm Joe's Bot.")
+        except:
+            pass
+
     await bot.process_commands(msg)
 
 

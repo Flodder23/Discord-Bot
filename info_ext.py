@@ -84,7 +84,7 @@ class Info:
 
     @commands.command()
     async def google(self, *, query):
-        """Returns he results of a google search.
+        """Returns the results of a google search.
         Should be written as:
             >google [no. of results] <query>
         eg.:
