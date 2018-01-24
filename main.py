@@ -55,6 +55,13 @@ async def on_ready():
     bot.load_extension("games_ext")
     bot.load_extension("info_ext")
     print("Ready")
+    found = False
+    for server in bot.servers:
+        for member in server.members:
+            if member.id == IDs[3] and not found:
+                await bot.send_message(member, random.choice(
+                    ("Guess who's back", "Back again", "Shady's back", "Tell a friend")))
+                found = True
 
 
 @bot.event
