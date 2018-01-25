@@ -5,7 +5,6 @@ import os
 import asyncio
 import datetime
 from info_ext import get_time_until_xmas
-
 Token = os.getenv("BOT_TOKEN")
 if Token is None:
     Token = open("token.txt", "r").read()
@@ -109,7 +108,8 @@ async def on_message(msg):
 
 @bot.event
 async def on_command_error(error, ctx):
-    await bot.send_message(ctx.message.channel, "Sorry, something went wrong.")
+    if not (error.args[0].startswith("Command ") and error.args[0].endswith(" is not found")):
+        await bot.send_message(ctx.message.channel, "Sorry, something went wrong.")
 
 
 IDs = os.getenv("IDS")

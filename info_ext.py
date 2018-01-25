@@ -3,6 +3,7 @@ from discord.ext import commands
 import wolframalpha
 from dateutil.relativedelta import relativedelta
 import datetime
+
 try:
     import google
 except:
@@ -39,7 +40,7 @@ class Info:
                 msg = " ".join(msg.split()[1:])
             client = wolframalpha.Client("TVYA5X-8E78YXA7JL")
             res = client.query(msg)
-            em = discord.Embed()
+            em = discord.Embed(type="rich")
             for pod in res.pods:
                 for sub in pod.subpods:
                     if type == "pic":
@@ -202,7 +203,7 @@ class Info:
             await self.bot.say(output)
 
 
-def get_time_until_xmas(minsec = True):
+def get_time_until_xmas(minsec=True):
     today = datetime.date.today()
     nextXMasYear = today.year
     if today.month == 12 and today.day >= 25:
