@@ -9,11 +9,11 @@ Token = os.getenv("BOT_TOKEN")
 if Token is None:
     Token = open("token.txt", "r").read()
     print("Running using locally stored value for token")
-    bot = commands.Bot(description="Very very helpful bot. For code visit https://github.com/joegibby/Discord-Bot",
-                       command_prefix="<")
+    bot = commands.Bot(command_prefix="<")
 else:
     print("Running using Heroku config value for token")
-    bot = commands.Bot(description="Very very helpful bot. For code visit https://github.com/joegibby/Discord-Bot",
+    bot = commands.Bot(description="Open source Discord bot. For code visit https://github.com/joegibby/Discord-Bot,"+
+                       "where you can also make suggestions.\nYou can type "@anyone" in a message and the bot will choose for you.,
                        command_prefix=">")
 
 
