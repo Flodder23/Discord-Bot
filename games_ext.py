@@ -44,6 +44,7 @@ class Games:
 
     @commands.command()
     async def echo(self, *, msg):
+        """Repeats the message back to you."""
         await self.bot.say(msg)
 
 
