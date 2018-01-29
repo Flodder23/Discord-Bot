@@ -16,7 +16,7 @@ class Games:
 
     @commands.command()
     async def ping(self):
-        """Checks the bot is working.
+        """Checks the bot's ping.
         Should reply with "Pong!\"."""
         t = time.time()
         await self.bot.say("Pong!")
