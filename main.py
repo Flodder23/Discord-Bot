@@ -98,12 +98,13 @@ async def on_message(msg):
                                    random.choice(Members))
 
     if msg.content.upper().startswith("I'M ") or msg.content.upper().startswith("IM "):
-        try:
-            do_it = os.getenv("SpamBadJoke").split("\n")
-            if random.randint(1, int(do_it[1])) < int(do_it[0]):
-                await bot.send_message(msg.channel, "Hello " + " ".join(msg.content.split()[1:]) + ", I'm Joe's Bot.")
-        except:
-            pass
+        if len(msg.content.split()) < 4:
+            try:
+                do_it = os.getenv("SpamBadJoke").split("\n")
+                if random.randint(1, int(do_it[1])) < int(do_it[0]):
+                    await bot.send_message(msg.channel, "Hello " + " ".join(msg.content.split()[1:]) + ", I'm Joe's Bot.")
+            except:
+                pass
 
     await bot.process_commands(msg)
 
