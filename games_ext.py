@@ -7,13 +7,13 @@ import time
 class Games:
     def __init__(self, bot):
         self.bot = bot
-
+    
     @commands.command()
     async def rps(self):
         """Replies with Rock, Paper or Scissors.
         (You are expected to claim your action after the \"rps\")"""
         await self.bot.say(random.choice(("Rock", "Paper", "Scissors")))
-
+    
     @commands.command()
     async def ping(self):
         """Checks the bot's ping.
@@ -21,7 +21,7 @@ class Games:
         t = time.time()
         await self.bot.say("Pong!")
         await self.bot.say(str(int((time.time() - t) * 1000)) + "ms ping.")
-
+    
     @commands.command(pass_context=True)
     async def spam(self, ctx, *, msg="This is spam"):
         """Sends some spam.
@@ -41,7 +41,7 @@ class Games:
         except:
             for _ in range(10):
                 await self.bot.say(msg)
-
+    
     @commands.command()
     async def echo(self, *, msg):
         """Repeats the message back to you."""

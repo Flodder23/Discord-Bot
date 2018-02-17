@@ -5,17 +5,18 @@ import os
 import asyncio
 import datetime
 from info_ext import get_time_until_xmas
+
 Token = os.getenv("BOT_TOKEN")
 if Token is None:
     Token = open("token.txt", "r").read()
     print("Running using locally stored value for token")
     bot = commands.Bot(description="Open source Discord bot. For code visit https://github.com/joegibby/Discord-Bot," +
-                       "where you can also make suggestions.\nYou can type \"@anyone\" or \"@someone\" in a message and the bot will choose for you.",
+                                   "where you can also make suggestions.\nYou can type \"@anyone\" or \"@someone\" in a message and the bot will choose for you.",
                        command_prefix="<")
 else:
     print("Running using Heroku config value for token")
     bot = commands.Bot(description="Open source Discord bot. For code visit https://github.com/joegibby/Discord-Bot, " +
-                       "where you can also make suggestions.\nYou can type \"@anyone\" or \"@someone\" in a message and the bot will choose for you.",
+                                   "where you can also make suggestions.\nYou can type \"@anyone\" or \"@someone\" in a message and the bot will choose for you.",
                        command_prefix=">")
 
 
@@ -40,12 +41,12 @@ async def every_minute():
             if today.hour == int(time[0]) and today.minute == int(time[1]):
                 await bot.send_message(Adam, get_time_until_xmas(minsec=False))
                 await bot.send_message(Joe, get_time_until_xmas(minsec=False))
-
+        
         if os.getenv("SpamNathan") == "Go ahead":
             if random.randint(0, 1000) == 666:
                 await bot.send_message(Nathan, "Adam says hi")
                 await bot.send_message(Joe, "Adam says hi")
-
+        
         await asyncio.sleep(60)
 
 
@@ -76,7 +77,7 @@ async def on_message(msg):
                                                                    "Never take a shot of really hot sauce.")))
         except:
             pass
-
+    
     if "<@!%s>" % IDs[2] in msgTxt:
         try:
             do_it = os.getenv("SpamDom").split("\n")
@@ -84,7 +85,7 @@ async def on_message(msg):
                 await bot.send_message(msg.channel, "sosig")
         except:
             pass
-
+    
     if msg.author.id != "394502938094993410":  # Bot's own ID
         if "@someone" in msgTxt or "@anyone" in msgTxt:
             members = msg.server.members
@@ -96,16 +97,17 @@ async def on_message(msg):
                                                   "How about ",
                                                   "I'd go for ")) +
                                    random.choice(Members))
-
+    
     if msg.content.upper().startswith("I'M ") or msg.content.upper().startswith("IM "):
         if len(msg.content.split()) < 4:
             try:
                 do_it = os.getenv("SpamBadJoke").split("\n")
                 if random.randint(1, int(do_it[1])) < int(do_it[0]):
-                    await bot.send_message(msg.channel, "Hello " + " ".join(msg.content.split()[1:]) + ", I'm Joe's Bot.")
+                    await bot.send_message(msg.channel,
+                                           "Hello " + " ".join(msg.content.split()[1:]) + ", I'm Joe's Bot.")
             except:
                 pass
-
+    
     await bot.process_commands(msg)
 
 

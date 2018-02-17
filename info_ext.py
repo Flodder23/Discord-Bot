@@ -16,13 +16,13 @@ import wikipedia
 class Info:
     def __init__(self, bot):
         self.bot = bot
-
+    
     @commands.command()
     async def xmas(self):
         """Tells you how long until Christmas.
         As requested by Adam."""
         await self.bot.say(get_time_until_xmas())
-
+    
     @commands.command(pass_context=True)
     async def calc(self, ctx, *, msg):
         """Performs the desired calculation.
@@ -71,7 +71,7 @@ class Info:
                     await self.bot.say(output)
             except:
                 pass
-
+    
     @commands.command(pass_context=True)
     async def poll(self, ctx, *, msg):
         """Creates a poll.
@@ -79,10 +79,17 @@ class Info:
         >poll question; option1; option2; etc."""
         msg = msg.split(";")
         output = "**" + ctx.message.author.name + "** asked **" + msg[0] + "**\n"
+        blanks = 0
         for option in range(1, len(msg)):
-            output += ":regional_indicator_" + chr(96 + option) + ": " + msg[option] + "\n"
-        await self.bot.say(output + "\n React with your answer!")
-
+            if msg[option] == "":
+                blanks += 1
+            else:
+                output += ":regional_indicator_" + chr(96 + option - blanks) + ": " + msg[option] + "\n"
+        poll_msg = await self.bot.say(output + "\n React with your answer!")
+        for a in range(len(msg) - blanks - 1):
+            await self.bot.add_reaction(poll_msg, eval("\"\\N{REGIONAL INDICATOR SYMBOL LETTER " + chr(65 + a) + "}\""))
+        await self.bot.delete_message(ctx.message)
+    
     @commands.command()
     async def google(self, *, query):
         """Returns the results of a google search.
@@ -101,7 +108,7 @@ class Info:
         urls = []
         for url in results:
             urls.append(url)
-
+        
         ignore = []
         for a in range(len(urls)):
             for b in range(len(urls)):
@@ -115,7 +122,7 @@ class Info:
                     await self.bot.say(urls[a])
                 else:
                     break
-
+    
     @commands.command(name="def")
     async def define(self, word):
         """Defines the given word."""
@@ -129,7 +136,7 @@ class Info:
         except:
             ouput = "Sorry, something went wrong."
         await self.bot.say(output)
-
+    
     @commands.command()
     async def choose(self, *, choices):
         """Selects a choice at random for you.
@@ -151,7 +158,7 @@ class Info:
         else:
             amount = 1
             startAt = 0
-
+        
         chosen = []
         a = ""
         for _ in range(amount):
@@ -163,7 +170,7 @@ class Info:
             if not a == "":
                 output += choices[a] + "\n"
         await self.bot.say(output)
-
+    
     @commands.command(pass_context=True)
     async def call(self, ctx, *, msg):
         """Changes someone's nickname.
@@ -179,7 +186,7 @@ class Info:
                                                msg.split(" ")[1])
             else:
                 NO
-
+    
     @commands.command()
     async def wiki(self, *, query):
         """Gives the summary of the wikipedia article.
