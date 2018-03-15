@@ -69,6 +69,7 @@ async def on_ready():
 @bot.event
 async def on_message(msg):
     msgTxt = msg.content.lower()
+    print("here")
     if "<@!%s>" % IDs[1] in msgTxt:
         try:
             do_it = os.getenv("SpamMatej").split("\n")
@@ -97,17 +98,19 @@ async def on_message(msg):
                                                   "How about ",
                                                   "I'd go for ")) +
                                    random.choice(Members))
+        if "step" in msgTxt:
+            await bot.send_message(msg.channel, "Oooh <@%s> A cool step question" % IDs[5])
     
-    if msg.content.upper().startswith("I'M ") or msg.content.upper().startswith("IM "):
-        if len(msg.content.split()) < 4:
+    if msgTxt.startswith("i'm ") or msgTxt.startswith("im "):
+        if len(msgTxt.content.split()) < 4:
             try:
                 do_it = os.getenv("SpamBadJoke").split("\n")
                 if random.randint(1, int(do_it[1])) < int(do_it[0]):
                     await bot.send_message(msg.channel,
-                                           "Hello " + " ".join(msg.content.split()[1:]) + ", I'm Joe's Bot.")
+                                           "Hello " + " ".join(msgTxt.split()[1:]) + ", I'm Joe's Bot.")
             except:
                 pass
-    
+        
     await bot.process_commands(msg)
 
 
@@ -119,7 +122,7 @@ async def on_command_error(error, ctx):
 
 IDs = os.getenv("IDS")
 if IDs is None:
-    IDs = open("ids.txt", "r").read().split("\n")[:5]
+    IDs = open("ids.txt", "r").read().split("\n")[:6]
 else:
     IDs = IDs.split("\n")
 
