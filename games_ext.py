@@ -40,7 +40,7 @@ class Games:
                     await self.bot.say("This is spam.")
         except:
             for _ in range(10):
-                await self.bot.say(msg)
+                await self.bot.say(" ".join(msg))
     
     @commands.command()
     async def echo(self, *, msg):
