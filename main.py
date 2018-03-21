@@ -69,7 +69,6 @@ async def on_ready():
 @bot.event
 async def on_message(msg):
     msgTxt = msg.content.lower()
-    print("here")
     if "<@!%s>" % IDs[1] in msgTxt:
         try:
             do_it = os.getenv("SpamMatej").split("\n")
