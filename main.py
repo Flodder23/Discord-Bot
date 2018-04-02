@@ -6,18 +6,17 @@ import asyncio
 import datetime
 from info_ext import get_time_until_xmas
 
+info = """Open source Discord bot. For code visit https://github.com/joegibby/Discord-Bot, where you can also make suggestions.
+\nFeatures:
+    type \"@anyone\" in a message and the bot will choose someone to ping for you."""
 Token = os.getenv("BOT_TOKEN")
 if Token is None:
     Token = open("token.txt", "r").read()
     print("Running using locally stored value for token")
-    bot = commands.Bot(description="Open source Discord bot. For code visit https://github.com/joegibby/Discord-Bot," +
-                                   "where you can also make suggestions.\nYou can type \"@anyone\" or \"@someone\" in a message and the bot will choose for you.",
-                       command_prefix="<")
+    bot = commands.Bot(description=info, command_prefix="<")
 else:
     print("Running using Heroku config value for token")
-    bot = commands.Bot(description="Open source Discord bot. For code visit https://github.com/joegibby/Discord-Bot, " +
-                                   "where you can also make suggestions.\nYou can type \"@anyone\" or \"@someone\" in a message and the bot will choose for you.",
-                       command_prefix=">")
+    bot = commands.Bot(description=info, command_prefix=">")
 
 
 async def every_minute():
@@ -87,7 +86,7 @@ async def on_message(msg):
             pass
     
     if msg.author.id != "394502938094993410":  # Bot's own ID
-        if "@someone" in msgTxt or "@anyone" in msgTxt:
+        if "@anyone" in msgTxt:
             members = msg.server.members
             Members = []
             for member in members:
@@ -101,7 +100,7 @@ async def on_message(msg):
             await bot.send_message(msg.channel, "Oooh <@%s> A cool step question" % IDs[5])
     
     if msgTxt.startswith("i'm ") or msgTxt.startswith("im "):
-        if len(msgTxt.content.split()) < 4:
+        if len(msgTxt.split()) < 4:
             try:
                 do_it = os.getenv("SpamBadJoke").split("\n")
                 if random.randint(1, int(do_it[1])) < int(do_it[0]):
