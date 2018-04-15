@@ -46,6 +46,23 @@ class Games:
     async def echo(self, *, msg):
         """Repeats the message back to you."""
         await self.bot.say(msg)
+    
+    #@commands.command()
+    #async def traffic_light(self):
+    #    """Does a traffic light thing with it's status thing.
+    #    As requested by Adam for some reason"""
+    #    await self.bot.change_presence(status=discord.Status.idle)
+    #    time.sleep(2)
+    #    await self.bot.change_presence(status=discord.Status.dnd)
+    #    time.sleep(2)
+    #    await self.bot.change_presence(status=discord.Status.online)
+        
+
+    #@commands.command(pass_context=True)
+    #async def kys(self, ctx):
+    #    """Gets the bot to leave the server."""
+    #    print(ctx.message.server)
+    #    await self.bot.leave_server(ctx.message.server)
 
 
 def setup(bot):

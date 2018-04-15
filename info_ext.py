@@ -209,6 +209,25 @@ class Info:
                     output += "\n" + suggestion
             await self.bot.say(output)
 
+    @commands.command(pass_context=True)
+    async def pic(self, ctx, *, msg):
+        """Shows someone's profile picture in the chat
+        (as requested by Adam)"""
+        member = ctx.message.server.get_member_named(msg)
+        if member is None:
+            await self.bot.say("Sorry, I couldn't find anyone with the nickname %s." %msg)
+        else:
+            em = discord.Embed()
+            em.set_image(url=member.avatar_url)
+            await self.bot.say(embed = em)
+
+        #async def log(ctx, member: discord.Member = None):
+        #    if member is None:
+        #        member = ctx.message.author
+        #    em = discord.Embed()
+        #    em.set_image(url=member.avatar_url)
+        #    await my_bot.say(embed=em)
+
 
 def get_time_until_xmas(minsec=True):
     today = datetime.date.today()
