@@ -6,3 +6,4 @@ wolframalpha
 google
 PyDictionary
 wikipedia
+cleverwrap

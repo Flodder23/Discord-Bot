@@ -5,19 +5,20 @@ import os
 import asyncio
 import datetime
 from info_ext import get_time_until_xmas
+from cleverwrap import CleverWrap
 
 info = """Open source Discord bot. For code visit https://github.com/joegibby/Discord-Bot, where you can also make suggestions.
 \nFeatures:
     type \"@anyone\" in a message and the bot will choose someone to ping for you."""
-Token = os.getenv("BOT_TOKEN")
-if Token is None:
-    Token = open("token.txt", "r").read()
+Tokens = os.getenv("TOKENS")
+if Tokens is None:
+    Tokens = open("tokens.txt", "r").read()
     print("Running using locally stored value for token")
     bot = commands.Bot(description=info, command_prefix="<")
 else:
     print("Running using Heroku config value for token")
     bot = commands.Bot(description=info, command_prefix=">")
-
+Tokens = Tokens.split("\n")
 
 async def every_minute():
     await bot.wait_until_ready()
@@ -98,6 +99,8 @@ async def on_message(msg):
                                    random.choice(Members))
         if "step" in msgTxt:
             await bot.send_message(msg.channel, "Oooh <@%s> A cool step question" % IDs[5])
+        if "394502938094993410" in msgTxt:
+            await bot.send_message(msg.channel, cb.say(str(msgTxt.replace("394502938094993410", ""))))
     
     if msgTxt.startswith("i'm ") or msgTxt.startswith("im "):
         if len(msgTxt.split()) < 4:
@@ -123,4 +126,6 @@ if IDs is None:
 else:
     IDs = IDs.split("\n")
 
-bot.run(Token)
+cb = CleverWrap(Tokens[2])
+
+bot.run(Tokens[0])

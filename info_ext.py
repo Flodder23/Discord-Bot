@@ -11,6 +11,7 @@ except:
 from PyDictionary import PyDictionary
 import random
 import wikipedia
+import os
 
 
 class Info:
@@ -33,12 +34,16 @@ class Info:
         for test of the result.
 
         Goes through WolframAlpha."""
+        tokens = os.getenv("TOKENS")
+        if tokens is None:
+            tokens = open("tokens.txt", "r").read()
+        tokens = tokens.split("\n")
         try:
             type = "pic"
             if msg.startswith("txt ") or msg.startswith("pic "):
                 type = msg.split()[0]
                 msg = " ".join(msg.split()[1:])
-            client = wolframalpha.Client("TVYA5X-8E78YXA7JL")
+            client = wolframalpha.Client(tokens[1])
             res = client.query(msg)
             em = discord.Embed(type="rich")
             for pod in res.pods:
