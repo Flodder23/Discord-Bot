@@ -237,24 +237,35 @@ class Info:
     async def word(self, ctx, *, msg):
         """Returns stats pn a certain word; how many times it has been said and by whom
         should look like this:
-            >stats word [word/phrase]; [date]
-        the date should look like year.month.day"""
+            >stats word [word/phrase]; [date]; limit
+        the date should look like year.month.day
+        the limit is how many messages (for each channel) to search - reccommended 9999"""
+        sent = await self.bot.say("Checked 0 messages...")
         msg_count = 0
         people = {}
-        since = msg.split(";")[-1].split(".")
-        word = ";".join(msg.split(";")[:-1])
+        since = msg.split(";")[-2].split(".")
+        try:
+            limit = int(msg.split(";")[-1])
+        except:
+            limit = 9999
+        word = ";".join(msg.split(";")[:-2])
         try:
             after = datetime.datetime(int(since[0]), int(since[1]), int(since[2]))
         except:
             after = None
+        total = 0
         for channel in ctx.message.server.channels:
-            async for m in self.bot.logs_from(channel, limit=9999):
+            async for m in self.bot.logs_from(channel, limit=limit):
+                total += 1
                 if word in m.clean_content and (after is None or after < m.timestamp):
                     msg_count += 1
                     if m.author in people.keys():
                         people[m.author][1] += 1
                     else:
                         people[m.author] = [m.author.mention, 1]
+                if total % 1000 == 0:
+                    await self.bot.edit_message(sent, new_content="Checked %s messages..."%total)
+        await self.bot.edit_message(sent, new_content="Checked %s messages..." % total)
         max = 0
         ppl = []
         for person in people.items():
