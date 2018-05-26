@@ -69,6 +69,8 @@ async def on_ready():
 @bot.event
 async def on_message(msg):
     msgTxt = msg.content.lower()
+    if "394502938094993410" in msgTxt or msgTxt.startswith(">") and msg.author.id != "394502938094993410":
+        await bot.send_typing(msg.channel)
     if "<@!%s>" % IDs[1] in msgTxt:
         try:
             do_it = os.getenv("SpamMatej").split("\n")
@@ -110,7 +112,7 @@ async def on_message(msg):
                     await bot.send_message(msg.channel, "Hello " + " ".join(msgTxt.split()[1:]) + ", I'm Joe's Bot.")
             except:
                 pass
-        
+    
     await bot.process_commands(msg)
 
 

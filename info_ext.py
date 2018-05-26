@@ -226,12 +226,51 @@ class Info:
             em.set_image(url=member.avatar_url)
             await self.bot.say(embed = em)
 
-        #async def log(ctx, member: discord.Member = None):
-        #    if member is None:
-        #        member = ctx.message.author
-        #    em = discord.Embed()
-        #    em.set_image(url=member.avatar_url)
-        #    await my_bot.say(embed=em)
+
+    @commands.group()
+    async def stats(self):
+        """Yay stats"""
+        pass
+    
+    
+    @stats.command(pass_context=True)
+    async def word(self, ctx, *, msg):
+        """Returns stats pn a certain word; how many times it has been said and by whom
+        should look like this:
+            >stats word [word/phrase]; [date]
+        the date should look like year.month.day"""
+        msg_count = 0
+        people = {}
+        since = msg.split(";")[-1].split(".")
+        word = ";".join(msg.split(";")[:-1])
+        try:
+            after = datetime.datetime(int(since[0]), int(since[1]), int(since[2]))
+        except:
+            after = None
+        for channel in ctx.message.server.channels:
+            async for m in self.bot.logs_from(channel, limit=9999):
+                if word in m.clean_content and (after is None or after < m.timestamp):
+                    msg_count += 1
+                    if m.author in people.keys():
+                        people[m.author][1] += 1
+                    else:
+                        people[m.author] = [m.author.mention, 1]
+        max = 0
+        ppl = []
+        for person in people.items():
+            person = person[1]
+            if person[1] == max:
+                ppl.append(person)
+            elif person[1] > max:
+                ppl = [person]
+                max = person[1]
+        output = "\"%s\""%word + " has been said a total of %s times" % msg_count
+        o = ""
+        for person in ppl:
+            o += person[0] + ", "
+        if max > 0:
+            output += " with " + o[:-2] + " saying it the most, %s times" % max
+        await self.bot.say(output + ".")
 
 
 def get_time_until_xmas(minsec=True):
