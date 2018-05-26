@@ -100,8 +100,9 @@ async def on_message(msg):
                                                   "I'd go for ")) +
                                    random.choice(Members))
         if "step" in msgTxt:
-            await bot.send_message(msg.channel, "Oooh <@%s> A cool step question" % IDs[5])
-        if "394502938094993410" in msgTxt:
+            if random.randint(1, 10) == 5:
+                await bot.send_message(msg.channel, "Oooh <@%s> A cool step question" % IDs[5])
+        if "394502938094993410" in msgTxt or msg.channel.type == discord.ChannelType.private and not msgTxt.startswith(">"):
             await bot.send_message(msg.channel, cb.say(str(msgTxt.replace("394502938094993410", ""))))
     
     if msgTxt.startswith("i'm ") or msgTxt.startswith("im "):
