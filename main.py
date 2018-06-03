@@ -110,16 +110,11 @@ async def on_message(msg):
     if msgTxt.startswith("i'm ") or msgTxt.startswith("im ") or msgTxt.startswith("i am "):
         if msgTxt.startswith("i am "):
             msgTxt = " ".join(msgTxt.split()[1:])
-        print(1)
         if len(msgTxt.split()) < 4:
-            print(2)
             try:
                 do_it = os.getenv("SpamBadJoke").split("\n")
-                print(3)
                 if random.randint(1, int(do_it[1])) < int(do_it[0]):
-                    print(4)
                     await bot.send_message(msg.channel, "Hello " + " ".join(msgTxt.split()[1:]) + ", I'm Joe's Bot.")
-                    print(5)
             except:
                 pass
     
