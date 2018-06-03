@@ -102,15 +102,24 @@ async def on_message(msg):
         if "step" in msgTxt:
             if random.randint(1, 10) == 5:
                 await bot.send_message(msg.channel, "Oooh <@%s> A cool step question" % IDs[5])
-        if "394502938094993410" in msgTxt or msg.channel.type == discord.ChannelType.private and not msgTxt.startswith(">"):
+        if "394502938094993410" in msgTxt:
+            await bot.send_message(msg.channel, msg.author.mention + " " + cb.say(str(msgTxt.replace("394502938094993410", ""))))
+        elif msg.channel.type == discord.ChannelType.private and not msgTxt.startswith(">"):
             await bot.send_message(msg.channel, cb.say(str(msgTxt.replace("394502938094993410", ""))))
     
-    if msgTxt.startswith("i'm ") or msgTxt.startswith("im "):
+    if msgTxt.startswith("i'm ") or msgTxt.startswith("im ") or msgTxt.startswith("i am "):
+        if msgTxt.startswith("i am "):
+            msgTxt = " ".join(msgTxt.split()[1:])
+        print(1)
         if len(msgTxt.split()) < 4:
+            print(2)
             try:
                 do_it = os.getenv("SpamBadJoke").split("\n")
+                print(3)
                 if random.randint(1, int(do_it[1])) < int(do_it[0]):
+                    print(4)
                     await bot.send_message(msg.channel, "Hello " + " ".join(msgTxt.split()[1:]) + ", I'm Joe's Bot.")
+                    print(5)
             except:
                 pass
     
