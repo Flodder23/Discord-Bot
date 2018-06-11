@@ -12,6 +12,7 @@ from PyDictionary import PyDictionary
 import random
 import wikipedia
 import os
+import urbandictionary as ud
 
 
 class Info:
@@ -128,9 +129,16 @@ class Info:
                 else:
                     break
     
-    @commands.command(name="def")
-    async def define(self, word):
+    @commands.group(name="def", invoke_without_subcommand=True)
+    async def define(self):
         """Defines the given word."""
+        #await bot.say("Do you want the normie definition or the urban definition?")
+        pass
+    
+    @define.command()
+    async def normie(self, word):
+        """Defines the given word using a Normie Dictionary."""
+        print("Here")
         try:
             d = PyDictionary().meaning(word).items()
             output = ""
@@ -141,6 +149,29 @@ class Info:
         except:
             ouput = "Sorry, something went wrong."
         await self.bot.say(output)
+
+    @define.command()
+    async def urban(self, word, amount):
+        """Defines the given word using an Urban Dictionary.
+        Should look like this:
+            >def urban [word] [amount of results to return]
+        eg.
+            >def urban word 1
+        would return the first definition of "word"."""
+        defs = ud.define(word)
+        output = ""
+        given = 0
+        for d in defs:
+            if given < int(amount):
+                output += d.definition + "\n\n"
+                given += 1
+        await self.bot.say(output)
+
+    @define.command()
+    async def random(self):
+        """Returns te definitions of a random word from Urban Dictionary"""
+        word = ud.random()[0]
+        await self.bot.say("**%s**"%word.word + "\n" + word.definition)
     
     @commands.command()
     async def choose(self, *, choices):
