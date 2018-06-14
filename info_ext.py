@@ -3,7 +3,10 @@ from discord.ext import commands
 import wolframalpha
 from dateutil.relativedelta import relativedelta
 import datetime
-import google
+try:
+    import google
+except:
+    print("Unable to import google")
 from PyDictionary import PyDictionary
 import random
 import wikipedia
